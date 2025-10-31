@@ -3,7 +3,7 @@
 //! Demonstrates timeout and cancellation patterns in async code.
 
 #[cfg(feature = "async-tokio")]
-use tokio::time::{timeout, Duration, sleep};
+use tokio::time::{sleep, timeout, Duration};
 
 /// Timeout example
 ///
@@ -57,10 +57,7 @@ pub async fn timeout_example(delay_ms: u64) -> Result<String, &'static str> {
 /// # }
 /// ```
 #[cfg(feature = "async-tokio")]
-pub async fn retry_with_backoff<F, Fut, T, E>(
-    max_attempts: u32,
-    mut operation: F,
-) -> Result<T, E>
+pub async fn retry_with_backoff<F, Fut, T, E>(max_attempts: u32, mut operation: F) -> Result<T, E>
 where
     F: FnMut() -> Fut,
     Fut: std::future::Future<Output = Result<T, E>>,
@@ -102,4 +99,3 @@ mod tests {
         assert_eq!(result, Ok(100));
     }
 }
-

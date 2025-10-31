@@ -6,7 +6,7 @@ use rust_202::r#async::{
     concurrency::{spawn_tasks, timeout_example},
     patterns::{simple_pipeline, ConnectionStateMachine},
     streams::{CounterStream, FibonacciStream},
-    traits::{Repository, InMemoryRepo},
+    traits::{InMemoryRepo, Repository},
 };
 
 #[cfg(feature = "async-tokio")]
@@ -76,4 +76,3 @@ fn main() {
     println!("This example requires the 'async-tokio' feature.");
     println!("Run with: cargo run --example async_demo --features async-tokio");
 }
-

@@ -30,15 +30,14 @@
 //! ```
 
 pub mod basics;
-pub mod streams;
-pub mod traits;
-pub mod pinning;
 pub mod concurrency;
 pub mod io;
 pub mod patterns;
+pub mod pinning;
+pub mod streams;
+pub mod traits;
 
 // Re-export commonly used items
 pub use basics::*;
 pub use streams::*;
 pub use traits::*;
-

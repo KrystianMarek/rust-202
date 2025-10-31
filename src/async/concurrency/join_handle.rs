@@ -96,4 +96,3 @@ mod tests {
         assert_eq!(results, vec![10, 20, 30, 40]);
     }
 }
-

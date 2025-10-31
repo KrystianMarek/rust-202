@@ -2,9 +2,6 @@
 //!
 //! Demonstrates async TCP networking with tokio.
 
-#[cfg(feature = "async-tokio")]
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
-
 /// Echo server example
 ///
 /// ## Why?
@@ -53,10 +50,7 @@ pub async fn echo_message(message: &[u8]) -> Vec<u8> {
 #[cfg(feature = "async-tokio")]
 pub async fn read_lines(data: &[u8]) -> Vec<String> {
     let content = String::from_utf8_lossy(data);
-    content
-        .lines()
-        .map(|s| s.to_string())
-        .collect()
+    content.lines().map(|s| s.to_string()).collect()
 }
 
 #[cfg(all(test, feature = "async-tokio"))]
@@ -77,4 +71,3 @@ mod tests {
         assert_eq!(lines, vec!["first", "second", "third"]);
     }
 }
-

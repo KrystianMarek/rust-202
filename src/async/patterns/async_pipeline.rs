@@ -3,7 +3,7 @@
 //! Stream-based data processing pipelines.
 
 #[cfg(feature = "async-tokio")]
-use futures::stream::{self, Stream, StreamExt};
+use futures::stream::{self, StreamExt};
 
 /// Pipeline with map and filter
 ///
@@ -70,4 +70,3 @@ mod tests {
         assert!(result[0].contains("Value:"));
     }
 }
-

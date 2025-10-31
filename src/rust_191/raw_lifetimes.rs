@@ -150,6 +150,6 @@ mod tests {
         let data1 = vec![1, 2, 3];
         let data2 = vec![4, 5, 6];
         let comp = DataComparator::new(&data1, &data2);
-        assert_eq!(comp.first_is_larger(), false);
+        assert!(!comp.first_is_larger());
     }
 }

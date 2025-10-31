@@ -175,4 +175,3 @@ mod tests {
         assert!(async_divide(10, 0).await.is_err());
     }
 }
-

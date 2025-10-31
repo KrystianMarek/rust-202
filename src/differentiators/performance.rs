@@ -269,6 +269,6 @@ mod tests {
     #[test]
     fn test_performance_comparison() {
         let result = PerformanceComparison::process_large_dataset(100);
-        assert!(result.len() > 0);
+        assert!(!result.is_empty());
     }
 }

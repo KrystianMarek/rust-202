@@ -84,7 +84,9 @@ impl Cache for MemoryCache {
 /// # }
 /// ```
 pub async fn use_cache_dyn(mut cache: Box<dyn Cache>) {
-    cache.set("dynamic".to_string(), "dispatch".to_string()).await;
+    cache
+        .set("dynamic".to_string(), "dispatch".to_string())
+        .await;
     let value = cache.get("dynamic").await;
     assert_eq!(value, Some("dispatch".to_string()));
 }
@@ -112,4 +114,3 @@ mod tests {
         use_cache_dyn(Box::new(cache)).await;
     }
 }
-

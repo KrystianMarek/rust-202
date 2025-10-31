@@ -2,9 +2,9 @@
 //!
 //! Core pinning concepts for safe self-referential structures.
 
-use std::pin::Pin;
-use std::marker::PhantomPinned;
 use pin_project_lite::pin_project;
+use std::marker::PhantomPinned;
+use std::pin::Pin;
 
 /// Demonstrates Pin<Box<T>>
 ///
@@ -68,4 +68,3 @@ mod tests {
         assert_eq!(data.as_ref().value(), "test");
     }
 }
-

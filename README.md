@@ -16,36 +16,29 @@ An interactive, example-driven cheat sheet for advanced Rust concepts. This libr
 
 ## Quick Start
 
-Add this to your `Cargo.toml`:
+This is a **learning and reference repository**. Clone it locally to explore the examples:
 
-```toml
-[dependencies]
-rust-202 = "0.1"
+```bash
+# Clone the repository
+git clone https://github.com/KrystianMarek/rust-202.git
+cd rust-202
+
+# Explore the code
+cargo doc --open         # Browse the documentation
+cargo test               # Run all tests
+cargo run --example quickstart    # Run examples
 ```
 
-Then use in your code:
+### Using as a Reference
+
+Browse the source code to learn patterns, or copy specific examples into your own projects. Each module is self-contained and well-documented:
 
 ```rust
-use rust_202::functional::iterators::fibonacci_sequence;
-use rust_202::oop::composition::{Circle, Drawable, HasArea};
-use rust_202::idioms::error_handling::ResultExample;
-
-fn main() {
-    // Functional programming
-    let fibs: Vec<u64> = fibonacci_sequence().take(10).collect();
-    println!("First 10 Fibonacci numbers: {:?}", fibs);
-
-    // OOP with traits
-    let circle = Circle::new(5.0);
-    circle.draw();
-    println!("Circle area: {}", circle.area());
-
-    // Error handling
-    match ResultExample::safe_divide(10, 2) {
-        Ok(result) => println!("Result: {}", result),
-        Err(e) => println!("Error: {}", e),
-    }
-}
+// Example patterns you can learn from:
+// - src/functional/iterators.rs - Zero-cost iterator patterns
+// - src/oop/patterns/ - Gang of Four patterns in Rust
+// - src/async/ - Modern async/await patterns
+// - src/idioms/ - Rust-specific best practices
 ```
 
 ## Examples
@@ -176,13 +169,17 @@ Compare zero-cost abstractions:
 
 ## Documentation
 
-Full documentation available at [docs.rs/rust-202](https://docs.rs/rust-202).
-
-Build locally:
+Build and browse the documentation locally:
 
 ```bash
 cargo doc --open
 ```
+
+The documentation includes:
+- Comprehensive API documentation with examples
+- "Why?" sections explaining design decisions
+- Comparisons to Python, Go, and C
+- Runnable code examples
 
 ## Comparison: Rust vs Python/Go/C
 
@@ -197,7 +194,13 @@ cargo doc --open
 
 ## Contributing
 
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+This is a learning resource and reference implementation. Feel free to:
+- ⭐ Star the repository if you find it useful
+- 🐛 Open issues for corrections or suggestions
+- 🔀 Fork and modify for your own learning
+- 📖 Use code examples in your projects (MIT/Apache-2.0 licensed)
+
+See [doc/CONTRIBUTING.md](doc/CONTRIBUTING.md) for detailed guidelines if you'd like to contribute improvements.
 
 ## License
 
@@ -207,6 +210,16 @@ Licensed under either of:
 - MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
+
+## Project Goals
+
+This repository serves as:
+1. **Educational Resource** - Learn advanced Rust concepts with working examples
+2. **Reference Implementation** - See how to implement patterns idiomatically
+3. **Comparison Guide** - Understand what sets Rust apart from Python, Go, and C
+4. **Code Library** - Copy patterns into your own projects
+
+**Note**: This is not published to crates.io. It's designed for local exploration and learning.
 
 ## Resources
 

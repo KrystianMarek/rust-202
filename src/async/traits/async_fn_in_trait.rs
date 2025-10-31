@@ -24,6 +24,7 @@
 /// let user = repo.find_by_id(1).await;
 /// # }
 /// ```
+#[allow(async_fn_in_trait)]
 pub trait Repository {
     /// Find a user by ID
     async fn find_by_id(&self, id: u64) -> Option<String>;
@@ -75,6 +76,7 @@ impl Repository for InMemoryRepo {
 /// assert_eq!(result, 6);
 /// # }
 /// ```
+#[allow(async_fn_in_trait)]
 pub trait DataService<T> {
     /// Process data asynchronously
     async fn process(&self, data: Vec<T>) -> T
@@ -115,4 +117,3 @@ mod tests {
         assert_eq!(result, 15);
     }
 }
-

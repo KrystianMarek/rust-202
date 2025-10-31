@@ -7,4 +7,3 @@ pub mod stream_combinators;
 
 pub use stream_basics::*;
 pub use stream_combinators::*;
-

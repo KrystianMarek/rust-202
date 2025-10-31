@@ -93,4 +93,3 @@ mod tests {
         assert_eq!(machine.current_state(), &ConnectionState::Disconnected);
     }
 }
-

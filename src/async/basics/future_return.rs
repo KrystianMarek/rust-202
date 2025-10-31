@@ -26,8 +26,8 @@ use std::pin::Pin;
 /// assert_eq!(result, 84);
 /// # }
 /// ```
-pub fn unboxed_future(value: i32) -> impl Future<Output = i32> {
-    async move { value * 2 }
+pub async fn unboxed_future(value: i32) -> i32 {
+    value * 2
 }
 
 /// Return boxed future (when necessary)
@@ -64,13 +64,11 @@ pub fn boxed_future(value: i32) -> Pin<Box<dyn Future<Output = i32> + Send>> {
 /// assert_eq!(conditional_future(false, 5).await, 5);
 /// # }
 /// ```
-pub fn conditional_future(double: bool, value: i32) -> impl Future<Output = i32> {
-    async move {
-        if double {
-            value * 2
-        } else {
-            value
-        }
+pub async fn conditional_future(double: bool, value: i32) -> i32 {
+    if double {
+        value * 2
+    } else {
+        value
     }
 }
 
@@ -93,8 +91,8 @@ pub fn conditional_future(double: bool, value: i32) -> impl Future<Output = i32>
 /// assert_eq!(result, 200);
 /// # }
 /// ```
-pub fn spawnable_future(value: i32) -> impl Future<Output = i32> + Send + 'static {
-    async move { value * 2 }
+pub async fn spawnable_future(value: i32) -> i32 {
+    value * 2
 }
 
 #[cfg(all(test, feature = "async-tokio"))]
@@ -126,4 +124,3 @@ mod tests {
         assert_eq!(result, 100);
     }
 }
-

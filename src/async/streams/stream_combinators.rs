@@ -3,7 +3,7 @@
 //! Demonstrates stream transformation and composition.
 
 #[cfg(feature = "async-tokio")]
-use futures::stream::{self, Stream, StreamExt};
+use futures::stream::{self, StreamExt};
 
 /// Map combinator example
 ///
@@ -24,10 +24,7 @@ use futures::stream::{self, Stream, StreamExt};
 /// ```
 #[cfg(feature = "async-tokio")]
 pub async fn map_stream_example() -> Vec<i32> {
-    stream::iter(0..5)
-        .map(|x| x * 2)
-        .collect()
-        .await
+    stream::iter(0..5).map(|x| x * 2).collect().await
 }
 
 /// Filter combinator example
@@ -88,11 +85,7 @@ pub async fn chain_stream_example() -> Vec<i32> {
 /// ```
 #[cfg(feature = "async-tokio")]
 pub async fn take_skip_example() -> Vec<i32> {
-    stream::iter(0..10)
-        .skip(3)
-        .take(3)
-        .collect()
-        .await
+    stream::iter(0..10).skip(3).take(3).collect().await
 }
 
 /// Fold combinator (reduce)
@@ -151,4 +144,3 @@ mod tests {
         assert_eq!(result, 45);
     }
 }
-
