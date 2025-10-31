@@ -1,8 +1,6 @@
 # Rust-202: Advanced Rust Concepts Library
 
 [![CI](https://github.com/KrystianMarek/rust-202/workflows/CI/badge.svg)](https://github.com/KrystianMarek/rust-202/actions)
-[![Crates.io](https://img.shields.io/crates/v/rust-202.svg)](https://crates.io/crates/rust-202)
-[![Documentation](https://docs.rs/rust-202/badge.svg)](https://docs.rs/rust-202)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](LICENSE)
 
 An interactive, example-driven cheat sheet for advanced Rust concepts. This library provides practical, compilable examples demonstrating:
