@@ -1,0 +1,4 @@
+cognitive-complexity-threshold = 30
+doc-valid-idents = ["GoF", "OOP", "FP", "RAII", "UB", "GC"]
+avoid-breaking-exported-api = true
+
