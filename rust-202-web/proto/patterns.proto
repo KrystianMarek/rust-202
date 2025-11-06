@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package patterns;
+
+// Service showcasing rust-202 library patterns via gRPC
+service PatternsService {
+  // Get Fibonacci sequence
+  rpc GetFibonacci(FibonacciRequest) returns (FibonacciResponse);
+
+  // Stream async events (demonstrates async patterns)
+  rpc StreamEvents(EventRequest) returns (stream EventResponse);
+
+  // Execute pattern example
+  rpc ExecutePattern(PatternRequest) returns (PatternResponse);
+}
+
+message FibonacciRequest {
+  uint32 count = 1;
+}
+
+message FibonacciResponse {
+  repeated uint64 numbers = 1;
+}
+
+message EventRequest {
+  string pattern_type = 1;
+  uint32 count = 2;
+}
+
+message EventResponse {
+  string event_type = 1;
+  string data = 2;
+  int64 timestamp = 3;
+}
+
+message PatternRequest {
+  string pattern_name = 1;
+  string input_data = 2;
+}
+
+message PatternResponse {
+  string result = 1;
+  bool success = 2;
+  string message = 3;
+}
+

@@ -1,0 +1,54 @@
+[package]
+name = "rust-202"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version = "1.75.0"
+description = "An interactive, example-driven cheat sheet for advanced Rust concepts"
+keywords = ["rust", "examples", "patterns", "tutorial", "learning"]
+categories = ["development-tools", "rust-patterns"]
+
+[lib]
+name = "rust_202"
+path = "src/lib.rs"
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+once_cell.workspace = true
+parking_lot.workspace = true
+
+# Async runtime dependencies (feature-gated)
+tokio = { workspace = true, optional = true }
+async-std = { version = "1.12", optional = true }
+futures.workspace = true
+tokio-stream = { version = "0.1", optional = true }
+async-trait.workspace = true
+pin-project.workspace = true
+pin-project-lite.workspace = true
+
+# Python DSL support (compatible with Python 3.8-3.14+)
+pyo3 = { version = "0.22", features = ["auto-initialize", "abi3-py38"], optional = true }
+
+[dev-dependencies]
+criterion = { workspace = true, features = ["html_reports"] }
+anyhow.workspace = true
+proptest.workspace = true
+tokio-test = "0.4"
+
+[features]
+default = ["async-tokio"]
+async-tokio = ["tokio", "tokio-stream"]
+async-std-runtime = ["async-std"]
+all-async = ["async-tokio", "async-std-runtime"]
+python-dsl = ["pyo3"]
+
+[[bench]]
+name = "oop_bench"
+harness = false
+
+[[bench]]
+name = "functional_bench"
+harness = false
+

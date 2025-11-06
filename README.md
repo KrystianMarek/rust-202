@@ -3,7 +3,28 @@
 [![CI](https://github.com/KrystianMarek/rust-202/workflows/CI/badge.svg)](https://github.com/KrystianMarek/rust-202/actions)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](LICENSE)
 
-An interactive, example-driven cheat sheet for advanced Rust concepts. This library provides practical, compilable examples demonstrating:
+An interactive, example-driven cheat sheet for advanced Rust concepts.
+
+## 🎓 New to Rust?
+
+**Start with [BEGINNER_GUIDE.md](doc/BEGINNER_GUIDE.md)**!
+
+This guide provides:
+- 📖 Recommended learning path through the codebase
+- 💡 Explanations of Rust concepts (ownership, borrowing, traits)
+- ⚠️ Common mistakes and how to fix them
+- 📝 Glossary of Rust terms
+- 🎯 Where to find specific examples
+
+**The codebase is heavily annotated with "For Beginners" notes!**
+
+---
+
+## Components
+
+### 1. Library (`rust-202-lib`)
+
+Practical, compilable examples demonstrating:
 
 - 🚀 **Rust 1.75+ Features**: Latest stable Rust capabilities
 - 🎯 **OOP Patterns**: Trait-based object-oriented programming
@@ -11,33 +32,65 @@ An interactive, example-driven cheat sheet for advanced Rust concepts. This libr
 - 🏗️ **Design Patterns**: Gang of Four patterns adapted to Rust
 - 💡 **Rust Idioms**: Ownership, error handling, RAII
 - ⚡ **Performance**: What sets Rust apart from Python, Go, and C
+- 🔄 **Advanced Async**: Zero-cost async/await patterns
+- 🐍 **Python DSL**: Safe Python embedding with PyO3
+
+### 2. Web Application (`rust-202-web`)
+
+A production-ready **REST + gRPC server** that showcases library patterns through HTTP endpoints:
+
+- **Axum-based REST API** with auto-generated OpenAPI docs
+- **Tonic gRPC** for high-performance RPC
+- **Swagger UI** at `/docs` for interactive exploration
+- **Live demonstrations** of library concepts
 
 ## Quick Start
 
-This is a **learning and reference repository**. Clone it locally to explore the examples:
+### Option 1: Explore the Library
 
 ```bash
 # Clone the repository
 git clone https://github.com/KrystianMarek/rust-202.git
 cd rust-202
 
-# Explore the code
-cargo doc --open         # Browse the documentation
-cargo test               # Run all tests
-cargo run --example quickstart    # Run examples
+# Browse documentation
+cargo doc --open
+
+# Run tests
+cargo test --all-features
+
+# Run examples
+cargo run --example quickstart
+cargo run --example patterns
+cargo run --example async_demo
 ```
 
-### Using as a Reference
+### Option 2: Run the Web API Server
 
-Browse the source code to learn patterns, or copy specific examples into your own projects. Each module is self-contained and well-documented:
+```bash
+# Prerequisites: Install protobuf compiler
+brew install protobuf  # macOS
+# or
+sudo apt-get install protobuf-compiler  # Linux
 
-```rust
-// Example patterns you can learn from:
-// - src/functional/iterators.rs - Zero-cost iterator patterns
-// - src/oop/patterns/ - Gang of Four patterns in Rust
-// - src/async/ - Modern async/await patterns
-// - src/idioms/ - Rust-specific best practices
+# Run the server
+cd rust-202-web
+cargo run
 ```
+
+Then visit:
+- **REST API**: http://localhost:3000
+- **Swagger UI**: http://localhost:3000/docs
+- **Health Check**: http://localhost:3000/health
+
+Try the API:
+```bash
+curl "http://localhost:3000/functional/fibonacci?count=10"
+curl "http://localhost:3000/oop/singleton"
+curl -X POST "http://localhost:3000/patterns/fibonacci"
+```
+
+See [rust-202-web/README.md](rust-202-web/README.md) for detailed web app documentation.
 
 ## Examples
 
@@ -125,7 +178,7 @@ What makes Rust unique:
 - **Performance**: Zero-cost abstractions, no GC (vs Python/Go)
 - **Concurrency**: Fearless with Send/Sync (vs all)
 
-### 🔄 Advanced Async (`async`) *NEW!*
+### 🔄 Advanced Async (`async`)
 
 Cutting-edge async/await patterns:
 - **Async functions & futures**: Zero-cost state machines
@@ -134,6 +187,16 @@ Cutting-edge async/await patterns:
 - **Pinning**: Safe self-referential structures
 - **Concurrency**: select!, join!, timeout, cancellation
 - **Patterns**: Pipelines, state machines, retry logic
+
+### 🐍 Python DSL (`dsl`) *NEW!*
+
+Safe Python interpreter embedding:
+- **Script execution**: Run Python code from Rust
+- **Function calling**: Call Python functions with type safety
+- **Sandboxed execution**: Restricted Python for untrusted code
+- **Configuration DSL**: Python as config language
+- **Data pipelines**: Leverage Python's data ecosystem
+- **ML/AI integration**: Call Python ML models from Rust
 
 ```rust
 use rust_202::differentiators::safety::ThreadSafeCounter;

@@ -1,6 +1,27 @@
 //! # Error Handling Patterns
 //!
 //! Demonstrates idiomatic error handling in Rust using Result, Option, and the ? operator.
+//!
+//! ## For Rust Beginners
+//!
+//! **Rust has NO exceptions!** Instead, Rust uses two types:
+//!
+//! ### Result<T, E>
+//! For operations that can fail:
+//! - `Ok(value)` - Success with a value
+//! - `Err(error)` - Failure with an error
+//!
+//! ### Option<T>
+//! For values that might not exist:
+//! - `Some(value)` - Has a value
+//! - `None` - No value (like `null` in other languages, but safe!)
+//!
+//! ### The ? Operator
+//! Shorthand for "if error, return error; otherwise, unwrap the value"
+//!
+//! **vs Python**: Python has exceptions that can be forgotten
+//! **vs Go**: Go returns (value, error) tuples that can be ignored
+//! **vs Rust**: Compiler forces you to handle errors - can't be forgotten!
 
 /// Result-based error handling
 ///
@@ -9,6 +30,13 @@
 /// Unlike Python's exceptions (can be ignored) or Go's (error, nil) tuples
 /// (can be forgotten), Rust's Result must be handled or explicitly ignored.
 ///
+/// ## For Beginners
+/// `Result<T, E>` is an enum with two variants:
+/// - `Ok(T)` when operation succeeds
+/// - `Err(E)` when operation fails
+///
+/// You MUST handle both cases (or explicitly use `.unwrap()` to panic)
+///
 /// ## Example
 /// ```rust
 /// use rust_202::idioms::error_handling::ResultExample;
@@ -16,15 +44,24 @@
 /// let result = ResultExample::safe_divide(10, 2);
 /// assert_eq!(result.unwrap(), 5);
 /// ```
+// === UNIT STRUCT ===
+// A struct with no fields, used to group related functions
 pub struct ResultExample;
 
+// === IMPLEMENTATION BLOCK ===
 impl ResultExample {
     /// Safe division that returns Result
+    ///
+    /// **Beginner Note**: This function returns `Result<i32, String>` meaning:
+    /// - On success: `Ok(i32)` - the division result
+    /// - On failure: `Err(String)` - an error message
+    ///
+    /// Callers MUST handle both cases!
     pub fn safe_divide(a: i32, b: i32) -> Result<i32, String> {
         if b == 0 {
-            Err("Division by zero".to_string())
+            Err("Division by zero".to_string())  // Return error variant
         } else {
-            Ok(a / b)
+            Ok(a / b)  // Return success variant with result
         }
     }
 
@@ -37,9 +74,23 @@ impl ResultExample {
     /// let result = ResultExample::parse_and_double("42");
     /// assert_eq!(result.unwrap(), 84);
     /// ```
+    ///
+    /// **Beginner Note**: The `?` operator is magic!
+    ///
+    /// ```rust
+    /// let num = s.parse::<i32>()?;
+    /// ```
+    ///
+    /// This is shorthand for:
+    /// ```rust
+    /// let num = match s.parse::<i32>() {
+    ///     Ok(n) => n,           // If OK, extract value
+    ///     Err(e) => return Err(e),  // If Err, return error early
+    /// };
+    /// ```
     pub fn parse_and_double(s: &str) -> Result<i32, std::num::ParseIntError> {
-        let num = s.parse::<i32>()?; // ? operator propagates error
-        Ok(num * 2)
+        let num = s.parse::<i32>()?;  // ? = "propagate error if failed, otherwise unwrap"
+        Ok(num * 2)  // Wrap result in Ok variant
     }
 
     /// Chain multiple operations

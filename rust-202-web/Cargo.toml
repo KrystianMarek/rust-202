@@ -1,0 +1,62 @@
+[package]
+name = "rust-202-web"
+version = "0.1.0"
+edition = "2021"
+authors = ["Krystian Marek"]
+
+[[bin]]
+name = "rust-202-web"
+path = "src/main.rs"
+
+[lib]
+name = "rust_202_web"
+path = "src/lib.rs"
+
+[dependencies]
+# Web framework
+axum = "0.7"
+tokio = { version = "1.40", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+hyper = { version = "1.0", features = ["full"] }
+
+# gRPC
+tonic = "0.12"
+prost = "0.13"
+
+# OpenAPI documentation
+utoipa = { version = "4.2", features = ["axum_extras"] }
+utoipa-swagger-ui = { version = "7.0", features = ["axum"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Async utilities (for async feature)
+tokio-stream = { version = "0.1", optional = true }
+futures = { version = "0.3", optional = true }
+
+# Library integration
+rust-202 = { path = "../rust-202-lib" }
+
+[build-dependencies]
+tonic-build = "0.12"
+
+[dev-dependencies]
+reqwest = { version = "0.12", features = ["json"] }
+tower = "0.4"
+
+[features]
+default = ["grpc", "async-tokio", "python-dsl"]
+grpc = []
+async-tokio = ["rust-202/async-tokio", "tokio-stream", "futures"]
+python-dsl = ["rust-202/python-dsl"]
+

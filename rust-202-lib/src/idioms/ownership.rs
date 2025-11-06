@@ -1,6 +1,23 @@
 //! # Ownership and Borrowing Patterns
 //!
 //! Demonstrates Rust's ownership system and common borrowing patterns.
+//!
+//! ## For Rust Beginners
+//!
+//! **Ownership** is Rust's superpower! It's what enables memory safety without a garbage collector.
+//!
+//! ### Three Core Rules:
+//! 1. Each value has exactly **one owner**
+//! 2. When the owner goes out of scope, the value is **dropped** (freed)
+//! 3. You can **borrow** (reference) values without taking ownership
+//!
+//! ### Borrowing Rules:
+//! - Many **immutable** borrows (`&T`) OR one **mutable** borrow (`&mut T`)
+//! - References must always be valid (no dangling pointers!)
+//!
+//! **vs Python**: Python has GC (garbage collector) - automatic but with pauses
+//! **vs C**: C has manual malloc/free - fast but error-prone
+//! **vs Rust**: Compile-time memory management - safe AND fast!
 
 /// RAII (Resource Acquisition Is Initialization) example
 ///
@@ -8,6 +25,10 @@
 /// RAII in Rust guarantees resource cleanup without garbage collection.
 /// Unlike Python's `__del__` (unreliable timing) or C's manual free
 /// (error-prone), Rust's Drop trait is deterministic and automatic.
+///
+/// ## For Beginners
+/// When a value goes out of scope (closing `}`), Rust automatically calls
+/// its `drop` method to clean up. This is like C++ destructors but enforced.
 ///
 /// ## Example
 /// ```rust
@@ -18,28 +39,45 @@
 ///     handle.write("Hello");
 /// } // File automatically closed here via Drop
 /// ```
+// === STRUCT DEFINITION ===
+// 'pub struct' defines a public structure (like a class in OOP languages)
 pub struct FileHandle {
-    filename: String,
+    filename: String,  // Private field - can only be accessed within this module
 }
 
+// === IMPLEMENTATION BLOCK ===
+// 'impl StructName' defines methods for the struct
 impl FileHandle {
     /// Open a file
+    ///
+    /// **Beginner Note**: `&str` is a string slice (reference to string data).
+    /// `Self` is shorthand for `FileHandle`.
     pub fn open(filename: &str) -> Self {
         println!("Opening file: {}", filename);
         Self {
-            filename: filename.to_string(),
+            filename: filename.to_string(),  // .to_string() converts &str to owned String
         }
     }
 
     /// Write to the file
+    ///
+    /// **Beginner Note**: `&self` means we're borrowing the FileHandle immutably.
+    /// We can read it but not modify it.
     pub fn write(&self, data: &str) {
         println!("Writing to {}: {}", self.filename, data);
     }
 }
 
+// === TRAIT IMPLEMENTATION ===
+// Drop trait is special - called automatically when value goes out of scope
 impl Drop for FileHandle {
+    /// Automatically called when FileHandle is dropped (goes out of scope)
+    ///
+    /// **Beginner Note**: This is RAII (Resource Acquisition Is Initialization).
+    /// You don't call this manually - Rust calls it for you!
     fn drop(&mut self) {
         println!("Closing file: {}", self.filename);
+        // In real code, this would close the actual file
     }
 }
 
@@ -94,6 +132,17 @@ impl Drop for PooledConnection {
 /// Move semantics transfer ownership without copying, enabling zero-cost
 /// resource management. Unlike Python's reference counting or Go's copying,
 /// Rust moves are truly zero-cost.
+///
+/// ## For Beginners
+/// In Rust, values are **moved** by default, not copied.
+/// When you pass a value to a function, ownership transfers to that function.
+///
+/// ```rust
+/// let v = vec![1, 2, 3];
+/// let v2 = v;  // v is MOVED to v2
+/// // println!("{:?}", v);  // ERROR! v no longer valid
+/// println!("{:?}", v2);  // OK! v2 owns the vec now
+/// ```
 pub struct MoveSemantics;
 
 impl MoveSemantics {
@@ -106,20 +155,34 @@ impl MoveSemantics {
     /// let result = MoveSemantics::transfer_ownership(vec![1, 2, 3]);
     /// assert_eq!(result, vec![1, 2, 3, 4]);
     /// ```
+    ///
+    /// **Beginner Note**: The parameter `mut data: Vec<i32>` takes ownership.
+    /// The `mut` means we can modify it. Returning `data` transfers ownership to the caller.
     pub fn transfer_ownership(mut data: Vec<i32>) -> Vec<i32> {
-        // `data` was moved into this function
-        data.push(4);
-        data // Ownership transferred to caller
+        // `data` was MOVED into this function (ownership transferred from caller)
+        data.push(4);  // We can modify because it's marked 'mut'
+        data  // Ownership MOVED back to caller (no copy!)
     }
 
-    /// Borrowing example
+    /// Borrowing example (immutable)
+    ///
+    /// **Beginner Note**: `&[i32]` is a **slice** - a view into an array/vector.
+    /// The `&` means we're **borrowing** (not taking ownership).
+    /// We can read the data but not modify it.
     pub fn borrow_immutably(data: &[i32]) -> i32 {
-        data.iter().sum()
+        data.iter().sum()  // Read-only access - perfect for borrowing!
     }
 
     /// Mutable borrowing example
+    ///
+    /// **Beginner Note**: `&mut Vec<i32>` is a **mutable borrow**.
+    /// We can modify the vector, but:
+    /// - Only ONE mutable borrow allowed at a time
+    /// - No other borrows (mutable or immutable) can exist simultaneously
+    /// This prevents data races at compile-time!
     pub fn borrow_mutably(data: &mut Vec<i32>) {
-        data.push(100);
+        data.push(100);  // We can modify because we have &mut
+        // The borrow ends when this function returns
     }
 }
 
